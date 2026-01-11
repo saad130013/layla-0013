@@ -67,7 +67,7 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
             width: 100% !important;
           }
 
-          /* Compact Printer Header */
+          /* Official Micro Printer Header - Grayscale & Professional */
           .print-header {
             position: fixed;
             top: 0;
@@ -77,7 +77,7 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
             display: flex !important;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 0.5pt solid #e2e8f0;
+            border-bottom: 0.4pt solid #cbd5e1;
             padding-bottom: 1px;
             background: white;
             z-index: 1000;
@@ -92,9 +92,9 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
             display: flex !important;
             justify-content: space-between;
             align-items: center;
-            border-top: 0.5pt solid #e2e8f0;
-            font-size: 4pt;
-            color: #94a3b8;
+            border-top: 0.4pt solid #e2e8f0;
+            font-size: 3.8pt;
+            color: #64748b;
             background: white;
             z-index: 1000;
           }
@@ -109,16 +109,16 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
             margin-bottom: 12px;
           }
 
-          /* Summary Bar - Micro Styling Matched to Image */
+          /* Summary Bar - Grayscale Micro Styling (Printer Friendly) */
           .kpi-row {
             display: flex !important;
             flex-direction: row !important;
-            gap: 12px !important;
-            margin-bottom: 1px !important;
-            background: #f8fafc !important;
-            padding: 1px 6px !important;
-            border-radius: 3px;
-            border: 0.4pt solid #cbd5e1;
+            gap: 14px !important;
+            margin-bottom: 2px !important;
+            background: #f1f5f9 !important;
+            padding: 1.5px 8px !important;
+            border-radius: 2px;
+            border: 0.4pt solid #e2e8f0;
             align-items: center;
           }
           .kpi-item {
@@ -127,12 +127,12 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
             gap: 3px !important;
             font-size: 5.5pt !important;
             font-weight: 700;
-            color: #475569;
+            color: #1e293b;
           }
-          .kpi-label { color: #64748b; text-transform: uppercase; font-size: 4.8pt; font-weight: 900; }
-          .kpi-value { color: #0d9488; font-weight: 900; }
+          .kpi-label { color: #64748b; text-transform: uppercase; font-size: 4.5pt; font-weight: 900; }
+          .kpi-value { color: #000000; font-weight: 900; }
 
-          /* Table Design */
+          /* Table Design - Remains Unchanged as requested */
           table {
             width: 100% !important;
             border-collapse: collapse !important;
@@ -162,7 +162,15 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
           tr:nth-child(even) { background-color: #f9fafb !important; }
           tr { page-break-inside: avoid !important; }
 
-          h2 { font-size: 7.5pt !important; margin-bottom: 0.5px !important; color: #0d9488 !important; font-weight: 900; }
+          /* Grayscale Title for Report Area */
+          h2.report-title { 
+            font-size: 7.2pt !important; 
+            margin-bottom: 0.5px !important; 
+            color: #475569 !important; 
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+          }
         }
 
         .print-header, .print-footer { display: none; }
@@ -177,7 +185,7 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
           </div>
           <div>
             <h3 className="text-lg font-black text-slate-900">Regulatory Report Ledger</h3>
-            <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Micro Layout v5.0</p>
+            <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Official Grayscale Layout v6.0</p>
           </div>
         </div>
         
@@ -196,7 +204,7 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
             onClick={() => window.print()}
             className="bg-teal-700 hover:bg-teal-900 text-white px-6 py-3 rounded-xl font-black text-sm flex items-center gap-2 shadow-xl transition-all"
           >
-            <Printer size={18} /> Export 30-Row PDF
+            <Printer size={18} /> Export Official PDF
           </button>
         </div>
       </div>
@@ -220,42 +228,42 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
 
       <div id="pdf-content" className="bg-white p-4 md:p-8 rounded-[32px] border border-slate-100 shadow-sm print:p-0 print:border-none print:shadow-none">
         
-        {/* PDF Header Section */}
+        {/* PDF Header Section - Grayscale Micro */}
         <div className="print-header">
-          <h1 className="text-[5pt] font-black text-slate-400 m-0 uppercase tracking-tighter">Operational Distribution Ledger</h1>
-          <p className="text-[5pt] font-black text-slate-300 m-0 uppercase tracking-widest">REF: {reportRef}</p>
+          <h1 className="text-[4.8pt] font-black text-slate-400 m-0 uppercase tracking-tight">OPERATIONAL MANPOWER LEDGER | SYSTEM AUDIT</h1>
+          <p className="text-[4.5pt] font-black text-slate-400 m-0 uppercase tracking-tighter">REF: {reportRef}</p>
         </div>
 
         <div className="print-footer">
-          <p className="m-0 font-bold uppercase tracking-tight">System Verified Audit • Confidential Regional Record • {selectedRegion}</p>
-          <p className="m-0 opacity-60 font-mono">TS: {reportDate}</p>
+          <p className="m-0 font-bold uppercase tracking-tight italic">Regulatory Compliance Verification • Verified Region: {selectedRegion}</p>
+          <p className="m-0 opacity-60 font-mono">Timestamp: {reportDate}</p>
         </div>
 
         <div className="content-wrapper">
           
-          {/* Summary Row - Micro Styled like user image */}
+          {/* Summary Row - Official Grayscale Micro Styling */}
           <div className="kpi-row">
             <div className="kpi-item">
-              <span className="kpi-label">Region:</span>
-              <span className="kpi-value text-slate-900 bg-teal-50 px-1 rounded uppercase">{selectedRegion}</span>
+              <span className="kpi-label">OFFICIAL REGION:</span>
+              <span className="kpi-value uppercase">{selectedRegion}</span>
             </div>
             <div className="kpi-item">
-              <span className="kpi-label">Workforce:</span>
+              <span className="kpi-label">TOTAL WORKFORCE:</span>
               <span className="kpi-value">{stats.total} Staff</span>
             </div>
             <div className="kpi-item">
-              <span className="kpi-label">Locations:</span>
+              <span className="kpi-label">LOCATION COUNT:</span>
               <span className="kpi-value">{stats.locations} Areas</span>
             </div>
             <div className="kpi-item">
-              <span className="kpi-label">Management:</span>
+              <span className="kpi-label">SUPERVISORY:</span>
               <span className="kpi-value">{stats.supervisors} Supv</span>
             </div>
           </div>
 
           <section className="space-y-0.5">
-            <h2 className="text-[7.5pt] font-black uppercase tracking-tight flex items-center justify-between">
-              <span>DISTRIBUTION LEDGER</span>
+            <h2 className="report-title flex items-center justify-between">
+              <span>LEDGER DISTRIBUTION RECORD</span>
             </h2>
             
             <div className="overflow-hidden border border-slate-200 rounded-sm print:border-slate-300">
@@ -291,7 +299,7 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
                     </tr>
                   )) : (
                     <tr>
-                      <td colSpan={7} className="text-center py-4 text-slate-400 font-bold italic text-[6pt]">No data available for {selectedRegion}.</td>
+                      <td colSpan={7} className="text-center py-4 text-slate-400 font-bold italic text-[6pt]">No data records found for region {selectedRegion}.</td>
                     </tr>
                   )}
                 </tbody>
@@ -300,8 +308,8 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
           </section>
 
           <div className="hidden print:block mt-1">
-            <p className="text-[4pt] font-bold text-slate-300 uppercase text-center tracking-[0.3em] border-t pt-0.5">
-              REGULATORY CLEARANCE VERIFIED • {selectedRegion} • LOG: {reportRef}
+            <p className="text-[3.8pt] font-bold text-slate-300 uppercase text-center tracking-[0.4em] border-t pt-0.5">
+              OFFICIAL REGULATORY CLEARANCE • {selectedRegion} • DATA SECURE • {reportRef}
             </p>
           </div>
         </div>
