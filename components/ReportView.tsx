@@ -1,8 +1,9 @@
 
 import React, { useState, useMemo } from 'react';
 import { Employee, ValidationState } from '../types';
+import * as XLSX from 'xlsx';
 import { 
-  Users, ShieldCheck, Printer, Building2, Search, Landmark, CreditCard, Hash, Globe
+  Users, ShieldCheck, Printer, Building2, Search, Landmark, CreditCard, Hash, Globe, FileSpreadsheet
 } from 'lucide-react';
 
 interface Props {
@@ -43,6 +44,46 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
       emp["NATIONALITY"]?.toLowerCase().includes(s)
     );
   }, [regionalEmployees, searchTerm]);
+
+  const handleExportExcel = () => {
+    // Prepare data for Excel with professional headers
+    const excelData = filteredData.map(emp => ({
+      "Employee #": emp["EMP#"],
+      "Full Name (EN)": emp["NAME (ENG)"],
+      "Full Name (AR)": emp["NAME (AR)"],
+      "Nationality": emp["NATIONALITY"],
+      "Civil ID": emp["ID#"],
+      "Position": emp["POSITION"],
+      "Location": emp["LOCATION"],
+      "Company": emp["COMPANY"],
+      "Region": emp["SourceSheet"]
+    }));
+
+    // Create worksheet
+    const worksheet = XLSX.utils.json_to_sheet(excelData);
+    
+    // Set column widths for better "formatting"
+    const wscols = [
+      { wch: 10 }, // Emp#
+      { wch: 30 }, // Name EN
+      { wch: 30 }, // Name AR
+      { wch: 15 }, // Nat
+      { wch: 20 }, // ID
+      { wch: 20 }, // Pos
+      { wch: 25 }, // Loc
+      { wch: 15 }, // Comp
+      { wch: 15 }  // Reg
+    ];
+    worksheet['!cols'] = wscols;
+
+    // Create workbook
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, selectedRegion.substring(0, 31));
+
+    // Export file
+    const fileName = `Regulatory_Report_${selectedRegion}_${new Date().toISOString().split('T')[0]}.xlsx`;
+    XLSX.writeFile(workbook, fileName);
+  };
 
   return (
     <div className="space-y-6">
@@ -185,7 +226,7 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
           </div>
           <div>
             <h3 className="text-lg font-black text-slate-900">Regulatory Report Ledger</h3>
-            <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Official Grayscale Layout v6.0</p>
+            <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Official Grayscale Layout v6.5</p>
           </div>
         </div>
         
@@ -200,12 +241,21 @@ const ReportView: React.FC<Props> = ({ data, validation }) => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <button 
-            onClick={() => window.print()}
-            className="bg-teal-700 hover:bg-teal-900 text-white px-6 py-3 rounded-xl font-black text-sm flex items-center gap-2 shadow-xl transition-all"
-          >
-            <Printer size={18} /> Export Official PDF
-          </button>
+          <div className="flex gap-2">
+            <button 
+              onClick={handleExportExcel}
+              className="bg-emerald-600 hover:bg-emerald-800 text-white px-4 py-3 rounded-xl font-black text-sm flex items-center gap-2 shadow-xl transition-all"
+              title="تصدير كملف إكسل منسق"
+            >
+              <FileSpreadsheet size={18} /> Excel
+            </button>
+            <button 
+              onClick={() => window.print()}
+              className="bg-teal-700 hover:bg-teal-900 text-white px-6 py-3 rounded-xl font-black text-sm flex items-center gap-2 shadow-xl transition-all"
+            >
+              <Printer size={18} /> Export PDF
+            </button>
+          </div>
         </div>
       </div>
 
